@@ -12,39 +12,32 @@ using namespace cv;
 int main(int argc, char** argv)
 {
   int fps=30;
-  int height=720;
-  int width=1080;
-  std::string ns ;
-  
-  ros::param::param<std::string>("ns", ns, "uav_3");
-  ros::param::param<int>("fps", fps, 30);
-  ros::param::param<int>("height", height, 720);
-  ros::param::param<int>("width", width, 1080);
+  int height;
+  int width;
+  int cam = 0;
 
-  //Get param values:
-  ros::param::get("~ns",ns);
-  ros::param::get("~fps",fps);
-  ros::param::get("~height",height);
-  ros::param::get("~width",width);
   
-  ros::param::get("~ns",ns);
-  std::string pub_topic_name = "/" + ns + "/video_stream";
-  ros::init(argc, argv, "video_streamer");
+  ros::init(argc, argv, "video_stream");
   ros::NodeHandle nh;
   image_transport::ImageTransport it(nh);
-  image_transport::Publisher pub = it.advertise(pub_topic_name, 1);
-
-
+  std::string ns = ros::this_node::getNamespace();
+  std::string path_topic = "/" + ns + "/video_stream";
   
+  image_transport::Publisher pub = it.advertise(path_topic, 1);
 
+    ros::param::get(path_topic+"/frame_height",height);
+    ros::param::get(path_topic+"/frame_width",width);
   
-  VideoCapture cap(0); // '0' to use the laptop webcam
+  ROS_INFO("fps: %d ",fps);
+  ROS_INFO("Resolution: %d x %d ",width,height);
+  VideoCapture cap(cam); // '0' to use the laptop webcam
   if(!cap.isOpened()) return 1;
   Mat frame,send;
   sensor_msgs::ImagePtr msg;
-  std::cout << "Namespace  : " << ns << std::endl ;
+  //std::cout << "Namespace  : " << ns << std::endl ;
   ros::Rate loop_rate(fps);
   while (nh.ok()) {
+    
     cap >> frame; // Read a new frame
     if(!frame.empty()){
         resize(frame, send, Size(width, height), 0, 0, INTER_LINEAR);
@@ -54,6 +47,8 @@ int main(int argc, char** argv)
         pub.publish(msg); 
 
     }
+    //  ROS_INFO("Resolution: %d x %d ",width,height);
+
     
     ros::spinOnce();
     loop_rate.sleep();
