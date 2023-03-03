@@ -31,10 +31,10 @@ int main(int argc, char** argv)
   std::string ns = ros::this_node::getNamespace();
   //image_transport::ImageTransport it(nh);
   
-  //std::string path_topic = "/" + ns + "/video_stream";
+  std::string path_topic = "/" + ns + "/video_stream_compress";
 
   // Publicador del topic "image_topic"
-  ros::Publisher pub = nh.advertise<sensor_msgs::CompressedImage>("/video_stream_compress", 1);  // Publicador del topic "image_topic"
+  ros::Publisher pub = nh.advertise<sensor_msgs::CompressedImage>(path_topic, 1);  // Publicador del topic "image_topic"
 
   nh.getParam("video_stream_compress/frame_height",height);
   nh.getParam("video_stream_compress/frame_width",width);

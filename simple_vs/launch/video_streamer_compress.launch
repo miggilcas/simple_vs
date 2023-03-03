@@ -9,7 +9,7 @@
     <group ns="uav_$(arg uav_id)">
         
         <!-- Launch video_streamer node for uav id=3 -->
-        <node pkg="simple_vs" type="video_stream_compress" name="video_stream_compress" output="screen">
+        <node pkg="simple_vs" type="video_stream_compress" name="video_stream_compress" output="screen" >
             <param name="path_video" value="$(find simple_vs)/data/video.mp4"/>
             <param name="fps" type="int" value="$(arg fps)"/>
             <param name="frame_height" type="int" value="$(arg height)"/>
