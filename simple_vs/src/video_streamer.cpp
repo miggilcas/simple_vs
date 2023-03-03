@@ -15,6 +15,7 @@ int main(int argc, char** argv)
   int height;
   int width;
   int cam = 0;
+  std::string path_video;
 
   
   ros::init(argc, argv, "video_stream");
@@ -25,17 +26,22 @@ int main(int argc, char** argv)
   
   image_transport::Publisher pub = it.advertise(path_topic, 1);
 
-    ros::param::get(path_topic+"/frame_height",height);
-    ros::param::get(path_topic+"/frame_width",width);
-  
+  nh.getParam("video_streamer/frame_height",height);
+  nh.getParam("video_streamer/frame_width",width);
+  nh.getParam("video_streamer/fps",fps);
+  nh.getParam("video_streamer/path_video",path_video);
+
   ROS_INFO("fps: %d ",fps);
   ROS_INFO("Resolution: %d x %d ",width,height);
-  VideoCapture cap(cam); // '0' to use the laptop webcam
+  ROS_INFO_STREAM(path_video);
+  VideoCapture cap(cam); 
+
   if(!cap.isOpened()) return 1;
   Mat frame,send;
   sensor_msgs::ImagePtr msg;
-  //std::cout << "Namespace  : " << ns << std::endl ;
+
   ros::Rate loop_rate(fps);
+
   while (nh.ok()) {
     
     cap >> frame; // Read a new frame
@@ -47,11 +53,8 @@ int main(int argc, char** argv)
         pub.publish(msg); 
 
     }
-    //  ROS_INFO("Resolution: %d x %d ",width,height);
 
-    
     ros::spinOnce();
     loop_rate.sleep();
   }
- 
 }
