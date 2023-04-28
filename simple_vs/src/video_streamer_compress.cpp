@@ -49,13 +49,13 @@ int main(int argc, char** argv)
 
 
   VideoCapture cap;
-  if(source == 0){
-   cap.open(cam); // '0' to use the laptop webcam
-  }else{
-    ROS_INFO("Video ");
-    cap.open(path_video); 
-  }
-
+  // if(source == 0){
+  //  cap.open(cam); // '0' to use the laptop webcam
+  // }else{
+  //   ROS_INFO("Video ");
+  //   cap.open(path_video); 
+  // }
+  cap.open(source); 
   if(!cap.isOpened()) return 1;
   Mat frame,send;
   sensor_msgs::CompressedImage msg;
