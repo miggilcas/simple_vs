@@ -14,12 +14,17 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  std_srvs
+  theora_image_transport
 )
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 catkin_package(
-  CATKIN_DEPENDS cv_bridge image_transport roscpp rospy sensor_msgs std_msgs
+  CATKIN_DEPENDS cv_bridge image_transport roscpp rospy sensor_msgs std_msgs std_srvs
+)
+catkin_install_python(PROGRAMS scripts/srv_catec.py scripts/theora_video_streamer.py scripts/streamTopic.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 ###########

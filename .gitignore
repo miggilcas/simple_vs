@@ -1,1 +1,4 @@
 multiUAV_system
+.vscode
+data/video.MOV
+CATKIN_IGNORE
