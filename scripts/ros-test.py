@@ -21,14 +21,6 @@ colors = [
 topic = "/uav_2/dji_osdk_ros/fpv_camera_images"
 #topic = "/uav_2/video_stream"
 
-out = cv2.VideoWriter('appsrc ! videoconvert' + \
-    ' ! video/x-raw,format=I420' + \
-    ' ! x264enc bframes=0 tune=zerolatency speed-preset=ultrafast bitrate=600 key-int-max=' + str(fps * 2) + \
-    ' ! video/x-h264,profile=baseline' + \
-    ' ! rtspclientsink location=rtsp://localhost:8554/uav2_fpv',
-    cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
-if not out.isOpened():
-    raise Exception("can't open video writer")
 
 
 rospy.loginfo("I will suscribe to the topic %s", topic)
@@ -52,7 +44,6 @@ def callback(msg):
     #    for x in range(0, int(frame.shape[1] / 2)):
     #        frame[y][x] = color
 
-    out.write(frame)
     print("%s frame written to the server" % datetime.now())
 
     now = time()
