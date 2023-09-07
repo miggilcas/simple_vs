@@ -22,7 +22,7 @@ out = cv2.VideoWriter('appsrc ! videoconvert' + \
     ' ! video/x-raw,format=I420' + \
     ' ! x264enc bframes=0 tune=zerolatency speed-preset=ultrafast bitrate=600 key-int-max=' + str(fps * 2) + \
     ' ! video/x-h264,profile=baseline' + \
-    ' ! rtspclientsink location=rtsp://localhost:8554/mystream',
+    ' ! rtspclientsink location=rtsp://10.222.6.2:8554/uav2_fpv',
     cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
 if not out.isOpened():
     raise Exception("can't open video writer")
@@ -58,5 +58,5 @@ def callback(msg):
 
 if __name__ == '__main__':
     rospy.init_node("imagetimer111", anonymous=True)
-    rospy.Subscriber("/uav_2/video_stream", Image, callback)
+    rospy.Subscriber("/uav_2/dji_osdk_ros/fvp_camera_images", Image, callback)
     rospy.spin()
