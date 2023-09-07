@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 from datetime import datetime
 from time import sleep, time
+import cv2
+import numpy as np
 import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import os
 
-import cv2
-import numpy as np
+
 
 fps = 30
 width = 1080#800

@@ -2,12 +2,11 @@
 from datetime import datetime
 from time import sleep, time
 import rospy
+import os
+import numpy as np
+import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
-import os
-
-import cv2
-import numpy as np
 
 fps = 30
 width = 1080#800
