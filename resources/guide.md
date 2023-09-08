@@ -1,9 +1,16 @@
 # Guide transmision using Mediametix server
 
+```
+docker run --rm -it --network=host bluenviron/mediamtx:latest
+```
+
 ## Server mediametix in drone and GCS
 
 The second best option
+
+```
 docker run --rm -it --network=host -v $PWD/mediamtx.yml:/mediamtx.yml bluenviron/mediamtx
+```
 
 ## Server mediametix in onli in GCS
 

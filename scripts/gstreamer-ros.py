@@ -25,13 +25,15 @@ colors = [
 
 topic = "/uav_2/dji_osdk_ros/fpv_camera_images"
 #topic = "/uav_2/video_stream"
-
-out = cv2.VideoWriter('appsrc ! videoconvert' + \
+#https://github.com/ContinuumIO/anaconda-issues/issues/223
+#pipeline = "appsrc ! video/x-raw,format=GRAY8,width=640,height=480,framerate=60/1 ! videoconvert ! x264enc ! avimux ! filesink location= ./test.avi "
+pileline = 'appsrc ! videoconvert' + \
     ' ! video/x-raw,format=I420' + \
     ' ! x264enc bframes=0 tune=zerolatency speed-preset=ultrafast bitrate=600 key-int-max=' + str(fps * 2) + \
     ' ! video/x-h264,profile=baseline' + \
-    ' ! rtspclientsink location=rtsp://localhost:8554/uav2_fpv',
-    cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
+    ' ! rtspclientsink location=rtsp://10.222.6.2:8554/uav2_fpv'
+
+out = cv2.VideoWriter(pileline,cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
 if not out.isOpened():
     raise Exception("can't open video writer")
 
@@ -42,6 +44,10 @@ start = time()
 bridge = CvBridge()
 now = time()
 diff = (1 / fps) - now - start
+
+if not out.isOpened():
+    print("%s problem to write " % datetime.now())
+    raise IOError
 
 def callback(msg):
     global now,start,diff
@@ -56,6 +62,9 @@ def callback(msg):
     #for y in range(0, int(frame.shape[0] / 2)):
     #    for x in range(0, int(frame.shape[1] / 2)):
     #        frame[y][x] = color
+    if not out.isOpened():
+        print("%s problem to write " % datetime.now())
+        raise IOError
 
     out.write(frame)
     print("%s frame written to the server" % datetime.now())

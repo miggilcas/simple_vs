@@ -448,18 +448,6 @@ paths:
     runOnReady: >
       ffmpeg -i rtsp://localhost:$RTSP_PORT/$MTX_PATH
       -c copy
-      -f rtsp rtsp://another-server/another-path
+      -f rtsp rtsp://10.222.6.2:8554/$MTX_PATH
     # Restart the command if it exits.
     runOnReadyRestart: yes
-
-    # Command to run when a clients starts reading.
-    # Prepend ./ to run an executable in the current folder (example: "./ffmpeg")
-    # This is terminated with SIGINT when a client stops reading.
-    # The following environment variables are available:
-    # * RTSP_PATH: path name
-    # * RTSP_PORT: server port
-    # * G1, G2, ...: regular expression groups, if path name is
-    #   a regular expression.
-    runOnRead:
-    # Restart the command if it exits.
-    runOnReadRestart: no
