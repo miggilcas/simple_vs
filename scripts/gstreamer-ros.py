@@ -8,9 +8,15 @@ import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
+selectcamera = "m210_fpv"
+dimentions = {
+    "m210_fpv": [608,448],
+    "video2" :[800,600],
+    "video" :[1080,720]
+             }
 fps = 30
-width = 1080#800
-height = 720#600
+width = dimentions[selectcamera][0]#800
+height = dimentions[selectcamera][1]#720#600
 colors = [
     (0, 0, 255),
     (255, 0, 0),
