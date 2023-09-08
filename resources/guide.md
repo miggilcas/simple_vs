@@ -1,12 +1,15 @@
 # Guide transmision using Mediametix server
 
+para no gastar mucho tiempo puedo hacer consultas cada ciero tiempo del servicio , o hacer que se suscriba a un topoc que envia la gcs y con eso reiniciar
+es importante volver a ver lo de la retransmision de los servidores.
+
 ```
 docker run --rm -it --network=host bluenviron/mediamtx:latest
 ```
 
 ## Server mediametix in drone and GCS
 
-The second best option
+The second best option, problem is the container dont have ffmpg commando
 
 ```
 docker run --rm -it --network=host -v $PWD/mediamtx.yml:/mediamtx.yml bluenviron/mediamtx
