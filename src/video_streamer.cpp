@@ -46,9 +46,9 @@ int main(int argc, char** argv)
     
     cap >> frame; // Read a new frame
     if(!frame.empty()){
-        resize(frame, send, Size(width, height), 0, 0, INTER_LINEAR);
+        //resize(frame, send, Size(width, height), 0, 0, INTER_LINEAR);
 
-        msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8",send).toImageMsg();
+        msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8",frame).toImageMsg();
 
         pub.publish(msg); 
 

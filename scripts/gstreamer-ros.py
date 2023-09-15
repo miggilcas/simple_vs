@@ -50,7 +50,6 @@ diff = (1 / fps) - now - start
 def callback(msg):
     global now,start,diff,out
         
-        
     try:
         print("%s frame written to the server" % datetime.now())
         frame = bridge.imgmsg_to_cv2(msg, desired_encoding="bgr8")
