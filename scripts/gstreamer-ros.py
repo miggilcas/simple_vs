@@ -8,9 +8,10 @@ import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-selectcamera = "m210_fpv"
+selectcamera = "M210_XT2"
 dimentions = {
-    "m210_fpv": [608,448],
+    "M210_FPV": [608,448],
+    "M210_XT2": [1280,720],
     "video2" :[800,600],
     "video" :[1080,720]
              }
