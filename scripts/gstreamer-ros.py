@@ -8,7 +8,7 @@ import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-selectcamera = "M210_XT2"
+selectcamera = "M210_FPV"
 dimentions = {
     "M210_FPV": [608,448],
     "M210_XT2": [1280,720],
@@ -24,8 +24,9 @@ colors = [
     (0, 255, 0),
 ]
 
+topic = "/uav_2/dji_osdk_ros/main_camera_images"
 #topic = "/uav_2/dji_osdk_ros/fpv_camera_images"
-topic = "/uav_2/video_stream"
+#topic = "/uav_2/video_stream"
 #https://github.com/davidvuong/gstreamer-test/blob/master/src/python/opencv-cnn-rtsp-server.py
 #https://github.com/ContinuumIO/anaconda-issues/issues/223
 #pipeline = "appsrc ! video/x-raw,format=GRAY8,width=640,height=480,framerate=60/1 ! videoconvert ! x264enc ! avimux ! filesink location= ./test.avi "
@@ -33,7 +34,7 @@ pileline = 'appsrc ! videoconvert' + \
     ' ! video/x-raw,format=I420' + \
     ' ! x264enc bframes=0 tune=zerolatency speed-preset=ultrafast bitrate=600 key-int-max=' + str(fps * 2) + \
     ' ! video/x-h264,profile=baseline' + \
-    ' ! rtspclientsink location=rtsp://localhost:8554/uav2_fpv'
+    ' ! rtspclientsink location=rtsp://localhost:8554/main'
 
 out = cv2.VideoWriter(pileline,cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
 
@@ -54,6 +55,7 @@ def callback(msg):
     try:
         print("%s frame written to the server" % datetime.now())
         frame = bridge.imgmsg_to_cv2(msg, desired_encoding="bgr8")
+        frame1 = cv2.resize(frame,(width,height),interpolation = cv2.INTER_LINEAR)
         #frame = np.zeros((height, width, 3), np.uint8)
 
         # create a rectangle
@@ -66,7 +68,7 @@ def callback(msg):
         if not out.isOpened():
             raise Exception("can't open video writer")
 
-        out.write(frame)
+        out.write(frame1)
         print("%s frame written to the server" % datetime.now())
 
         now = time()
