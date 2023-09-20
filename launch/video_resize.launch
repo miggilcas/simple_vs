@@ -1,0 +1,22 @@
+<launch>
+
+    <arg name="uav_id" default="2"/>
+    <arg name="fps" default="10"/>
+    <arg name="height" default="720"/>
+    <arg name="width" default="1080"/>
+    <arg name="source" default="1"/> <!-- 0 para camara , 1 para video-->
+
+    <group ns="uav_$(arg uav_id)">
+        
+        <!-- Launch video_streamer node for uav id=3 -->
+        <node pkg="simple_vs" type="video_resize" name="video_resize" output="screen" >
+            <param name="path_video" value="$(find simple_vs)/data/video.mp4"/>
+            <param name="fps" type="int" value="$(arg fps)"/>
+            <param name="frame_height" type="int" value="$(arg height)"/>
+            <param name="frame_width" type="int" value="$(arg width)"/>
+            <param name="ns" value="uav_$(arg uav_id)"/>
+            <param name="source" type="int" value="$(arg source)"/>
+        </node>
+    </group>
+
+</launch>
