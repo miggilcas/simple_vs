@@ -35,7 +35,7 @@ include_directories(  ${catkin_INCLUDE_DIRS} )
 
 add_executable(video_streamer src/video_streamer.cpp )
 add_executable(video_stream_compress src/video_streamer_compress.cpp)
-add_executable(video_streamer src/video_resize.cpp )
+add_executable(video_resize src/video_resize.cpp )
 target_link_libraries(video_streamer ${catkin_LIBRARIES})
 target_link_libraries(video_streamer ${OpenCV_LIBRARIES})
 target_link_libraries(video_stream_compress ${catkin_LIBRARIES})
