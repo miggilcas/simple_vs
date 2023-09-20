@@ -39,7 +39,7 @@ public:
       return;
     }
 
-    cv::resize(cv_ptr->image,Image1,cv::Size(608,448))
+    cv::resize(cv_ptr->image,Image1,cv::Size(608,448));
 
     mymsg = cv_bridge::CvImage(std_msgs::Header(), "bgr8",Image1).toImageMsg();
 
