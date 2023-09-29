@@ -1,0 +1,9 @@
+<launch>
+    <!-- Configurable options -->
+    <arg name="uav_id" default="20"/>
+
+    <group ns="uav_$(arg uav_id)">
+        <node pkg="simple_vs" type="readMAV-ROS.py" name="mission_node_$(arg uav_id)" output="screen"
+        args="-s=udpout:51.91.59.240:14555"/>
+    </group>
+</launch>
