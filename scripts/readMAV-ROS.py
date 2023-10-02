@@ -51,7 +51,7 @@ def main(port, baudrate, filt, dest_a, dest_p, serial_out):
     rospy.init_node('talker', anonymous=True)
     pub_battery = rospy.Publisher('battery', BatteryState, queue_size=10)
     pub_gps = rospy.Publisher('gps', NavSatFix, queue_size=10)
-    pub_velocity =rospy.Publisher('cmd_vel', Twist , queue_size=10)
+    pub_velocity =rospy.Publisher('velocity', Twist , queue_size=10)
     pub_heading = rospy.Publisher('heading', Float64, queue_size=10)
 
     print("Reading MAVLink messages on port %s (%s Bd)" % (port, baudrate))
@@ -137,12 +137,6 @@ def main(port, baudrate, filt, dest_a, dest_p, serial_out):
                         movement_cmd.angular.z = 0 
                         pub_velocity.publish(movement_cmd)
                         pub_heading.publish(data_msg["hdg"])
-
-                    
-
-
-
-
 
                     if sock:
                         sock.sendto(str(msg).encode('utf-8'), (dest_a, int(dest_p)))
