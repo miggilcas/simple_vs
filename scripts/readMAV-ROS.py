@@ -8,7 +8,7 @@ import glob, serial
 import signal
 import rospy
 from std_msgs.msg import Float64 
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 from sensor_msgs.msg import BatteryState,NavSatFix,NavSatStatus
 
 init()
@@ -51,8 +51,9 @@ def main(port, baudrate, filt, dest_a, dest_p, serial_out):
     rospy.init_node('talker', anonymous=True)
     pub_battery = rospy.Publisher('battery', BatteryState, queue_size=10)
     pub_gps = rospy.Publisher('gps', NavSatFix, queue_size=10)
-    pub_velocity =rospy.Publisher('velocity', Twist , queue_size=10)
-    pub_heading = rospy.Publisher('heading', Float64, queue_size=10)
+    pub_velocity =rospy.Publisher('velocity', TwistStamped , queue_size=10)
+    pub_velocity_com = rospy.Publisher('velocity_compres', Float64, queue_size=10)
+    pub_heading = rospy.Publisher('compass_hdg', Float64, queue_size=10)
 
     print("Reading MAVLink messages on port %s (%s Bd)" % (port, baudrate))
     if filt:
@@ -128,15 +129,24 @@ def main(port, baudrate, filt, dest_a, dest_p, serial_out):
                         pub_battery.publish(msg_bat)
 
                     if data_msg["mavpackettype"] =="GLOBAL_POSITION_INT":
-                        movement_cmd = Twist()
-                        movement_cmd.linear.x = data_msg["vx"]
-                        movement_cmd.linear.y = data_msg["vy"]
-                        movement_cmd.linear.z = data_msg["vz"]
-                        movement_cmd.angular.x = 0 
-                        movement_cmd.angular.y = 0               
-                        movement_cmd.angular.z = 0 
+                        movement_cmd = TwistStamped()
+                        movement_cmd.header.stamp = rospy.Time.now()
+                        movement_cmd.twist.linear.x = data_msg["vx"]/100
+                        movement_cmd.twist.linear.y = data_msg["vy"]/100
+                        movement_cmd.twist.linear.z = data_msg["vz"]/100
+                        movement_cmd.twist.angular.x = 0 
+                        movement_cmd.twist.angular.y = 0               
+                        movement_cmd.twist.angular.z = 0 
                         pub_velocity.publish(movement_cmd)
-                        pub_heading.publish(data_msg["hdg"])
+
+                    if data_msg["mavpackettype"] =="VFR_HUD":
+                        #print("send heading ------------------------"+str(data_msg["heading"]))
+                        msgfloat = Float64()
+                        msgfloat.data = data_msg["heading"]
+                        pub_heading.publish(msgfloat)
+                        msgfloat2 = Float64()
+                        msgfloat2.data = data_msg["airspeed"]
+                        pub_velocity_com.publish()
 
                     if sock:
                         sock.sendto(str(msg).encode('utf-8'), (dest_a, int(dest_p)))
