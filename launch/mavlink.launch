@@ -4,6 +4,6 @@
 
     <group ns="uav_$(arg uav_id)">
         <node pkg="simple_vs" type="readMAV-ROS.py" name="mission_node_$(arg uav_id)" output="screen"
-        args="-s=udpout:51.91.59.240:15000"/>
+        args="-s=udp:10.42.0.2:15000"/>
     </group>
 </launch>

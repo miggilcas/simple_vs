@@ -123,10 +123,12 @@ def main(port, baudrate, filt, dest_a, dest_p, serial_out):
                         msg_gps.position_covariance_type = 0
                         pub_gps.publish(msg_gps)
                     if data_msg["mavpackettype"] =="BATTERY_STATUS":
-                        msg_bat = BatteryState() # Create a message of this type 
-                        msg_bat.voltage = 12
-                        msg_bat.percentage = data_msg["battery_remaining"]
-                        pub_battery.publish(msg_bat)
+                        percentBatery = data_msg["battery_remaining"]
+                        if percentBatery> 0.1:
+                            msg_bat = BatteryState() # Create a message of this type 
+                            msg_bat.voltage = 12
+                            msg_bat.percentage = data_msg["battery_remaining"]
+                            pub_battery.publish(msg_bat)
 
                     if data_msg["mavpackettype"] =="GLOBAL_POSITION_INT":
                         movement_cmd = TwistStamped()
