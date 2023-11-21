@@ -35,6 +35,7 @@ catkin_install_python(PROGRAMS  scripts/readMAV-ROS.py scripts/srv_catec.py scri
 include_directories(  ${catkin_INCLUDE_DIRS} )
 
 add_executable(video_streamer src/video_streamer.cpp )
+add_executable(video_streamer_dji src/video_streamer_dji.cpp )
 add_executable(video_stream_compress src/video_streamer_compress.cpp)
 add_executable(video_resize src/video_resize.cpp )
 target_link_libraries(video_streamer ${catkin_LIBRARIES})
@@ -43,4 +44,6 @@ target_link_libraries(video_stream_compress ${catkin_LIBRARIES})
 target_link_libraries(video_stream_compress ${OpenCV_LIBRARIES})
 target_link_libraries(video_resize ${catkin_LIBRARIES})
 target_link_libraries(video_resize ${OpenCV_LIBRARIES})
+target_link_libraries(video_streamer_dji ${catkin_LIBRARIES})
+target_link_libraries(video_streamer_dji ${OpenCV_LIBRARIES})
 
