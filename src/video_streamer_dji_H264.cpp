@@ -61,17 +61,17 @@ class VideoStream
 public:
   VideoStream(): it_(nh_)
   {
-    nh_.getParam("video_streamer_dji/frame_height", height);
-    nh_.getParam("video_streamer_dji/frame_width", width);
-    nh_.getParam("video_streamer_dji/fps", fps);
-    nh_.getParam("video_streamer_dji/source", source);
+    nh_.getParam("video_streamer_dji_h264/frame_height", height);
+    nh_.getParam("video_streamer_dji_h264/frame_width", width);
+    nh_.getParam("video_streamer_dji_h264/fps", fps);
+    nh_.getParam("video_streamer_dji_h264/source", source);
     std::string ns = ros::this_node::getNamespace();
-    std::string path_subscriber = "/" + ns + "/dji_osdk_ros/camera_h264_stream";
-    std::string path_publisher = "/" + ns + "/dji_osdk_ros/camera_h264_stream_uncompress";
+    std::string path_subscriber =  ns + "/dji_osdk_ros/camera_h264_stream";
+    std::string path_publisher =  ns + "/dji_osdk_ros/camera_h264_stream_uncompress";
 
     ROS_INFO("fps: %d ", fps);
     ROS_INFO("Resolution: %d x %d ", width, height);
-    ROS_INFO_STREAM(path_subscriber);
+    ROS_INFO("path: %s",path_subscriber);
 
     ffmpeg_init();
     // Subscrive to input video feed and publish output video feed
