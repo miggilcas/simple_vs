@@ -142,15 +142,16 @@ public:
 
             pFrameRGB->height = h;
             pFrameRGB->width = w;
+            ROS_DEBUG("Size image %d %d", h,w);
 
             // Conver to Mat
             cv::Mat mat(pFrameRGB->height, pFrameRGB->width, CV_8UC3, pFrameRGB->data[0], pFrameRGB->width * 3);
             cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
 
             // matLock_.lock();
-            imgDJI_ = mat.clone();
+            //imgDJI_ = mat.clone();
             // matLock_.unlock();
-            img_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", imgDJI_).toImageMsg();
+            img_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", mat).toImageMsg();
             image_pub_.publish(img_msg);
           }
         }
