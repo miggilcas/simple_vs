@@ -9,7 +9,7 @@
     <group ns="uav_$(arg uav_id)">
         
         <!-- Launch video_streamer node for uav id=3 -->
-        <node pkg="simple_vs" type="video_streamer_dji_H264" name="video_streamer_dji_H264" output="screen" >
+        <node pkg="simple_vs" type="video_streamer_dji_h264" name="video_streamer_dji_h264" output="screen" >
             <param name="fps" type="int" value="$(arg fps)"/>
             <param name="frame_height" type="int" value="$(arg height)"/>
             <param name="frame_width" type="int" value="$(arg width)"/>
