@@ -71,7 +71,7 @@ public:
 
     ROS_INFO("fps: %d ", fps);
     ROS_INFO("Resolution: %d x %d ", width, height);
-    ROS_INFO_STREAM(source);
+    ROS_INFO_STREAM(path_subscriber);
 
     ffmpeg_init();
     // Subscrive to input video feed and publish output video feed
