@@ -71,7 +71,7 @@ public:
 
     ROS_INFO("fps: %d ", fps);
     ROS_INFO("Resolution: %d x %d ", width, height);
-    ROS_INFO("path: %s",path_subscriber);
+    ROS_INFO_STREAM(path_subscriber);
 
     ffmpeg_init();
     // Subscrive to input video feed and publish output video feed
@@ -82,6 +82,8 @@ public:
 
   void cameraCallBack(const sensor_msgs::Image &_msg)
   {
+    ROS_INFO("Image Decode");
+
     decodeImg((uint8_t *)&_msg.data[0], _msg.data.size());
   }
 
