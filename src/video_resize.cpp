@@ -13,20 +13,37 @@ class ImageConverter
   image_transport::ImageTransport it_;
   image_transport::Subscriber image_sub_;
   image_transport::Publisher image_pub_;
+  
+  int fps = 30;
+  int height = 448;
+  int width = 608;
+  std::string source;
 
 public:
   ImageConverter()
     : it_(nh_)
   {
+    nh_.getParam("video_resize/frame_height", height);
+    nh_.getParam("video_resize/frame_width", width);
+    nh_.getParam("video_resize/fps", fps);
+    nh_.getParam("video_resize/source", source);
+    std::string ns = ros::this_node::getNamespace();
+    std::string path_subscriber =  ns + source;
+    std::string path_publisher =  ns  + source + "resize";
+
+    ROS_INFO("fps: %d ", fps);
+    ROS_INFO("Resolution: %d x %d ", width, height);
+    ROS_INFO_STREAM(path_subscriber);
+
     // Subscrive to input video feed and publish output video feed
-    image_sub_ = it_.subscribe("/uav_2/dji_osdk_ros/main_camera_images", 1,
-      &ImageConverter::imageCb, this);
-    image_pub_ = it_.advertise("/uav_2/dji_osdk_ros/main_camera_images_resize", 1);
+    image_sub_ = it_.subscribe(path_subscriber, 1, &ImageConverter::imageCb, this);
+    image_pub_ = it_.advertise(path_publisher, 1);
   }
 
   void imageCb(const sensor_msgs::ImageConstPtr& msg)
   {
-     sensor_msgs::ImagePtr mymsg;
+    ROS_INFO("Callback of suscriber %d", 1);
+    sensor_msgs::ImagePtr mymsg;
     cv::Mat Image1,Image2;
     cv_bridge::CvImagePtr cv_ptr;
     try
@@ -39,7 +56,7 @@ public:
       return;
     }
 
-    cv::resize(cv_ptr->image,Image1,cv::Size(608,448));
+    cv::resize(cv_ptr->image,Image1,cv::Size(width,height));
 
     mymsg = cv_bridge::CvImage(std_msgs::Header(), "bgr8",Image1).toImageMsg();
 
