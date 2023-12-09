@@ -29,7 +29,7 @@ public:
     nh_.getParam("video_resize/source", source);
     std::string ns = ros::this_node::getNamespace();
     std::string path_subscriber =  ns + source;
-    std::string path_publisher =  ns  + source + "resize";
+    std::string path_publisher =  ns  + source + "_resize";
 
     ROS_INFO("fps: %d ", fps);
     ROS_INFO("Resolution: %d x %d ", width, height);
