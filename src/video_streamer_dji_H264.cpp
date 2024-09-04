@@ -16,7 +16,7 @@
 // INCLUDE
 #include <ros/ros.h>
 #include <iostream>
-#include <dji_camera_image.hpp>
+//#include <dji_camera_image.hpp>
 // #include <dji_osdk_ros/SetupCameraStream.h>
 // #include <dji_osdk_ros/SetupCameraH264.h>
 #include <sensor_msgs/Image.h>

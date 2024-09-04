@@ -19,8 +19,8 @@ def bool_response(req):
 
 def add_two_ints_server():
     rospy.init_node('catec')
-    s = rospy.Service('uav_100/threat_confirmation1', Trigger, trigger_response)
-    s1 = rospy.Service('uav_100/threat_confirmation', SetBool, bool_response)
+    s = rospy.Service('uav_100/threat_defuse', Trigger, trigger_response)
+    s1 = rospy.Service('uav_100/threat_confirmation', Trigger, trigger_response)
     print("Ready service")
     rospy.spin()
 

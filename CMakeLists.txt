@@ -25,6 +25,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 
 ## Load FFMPEG
+## find_package(FFMPEG REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
   libavformat
