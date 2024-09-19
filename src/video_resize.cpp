@@ -9,6 +9,8 @@
 #include "opencv2/cudaimgproc.hpp"
 #include <opencv2/cudawarping.hpp>
 
+using namespace cv;
+
 class ImageConverter
 {
   ros::NodeHandle nh_;
@@ -46,7 +48,7 @@ public:
   {
     ROS_INFO("Callback of suscriber %d", 1);
     sensor_msgs::ImagePtr mymsg;
-    cv::Mat Image1,Image2;
+    Mat Image1,Image2;
     cuda::GpuMat gpuInImage,gpuOutImage;
 
     cv_bridge::CvImagePtr cv_ptr;
