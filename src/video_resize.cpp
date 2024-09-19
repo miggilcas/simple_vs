@@ -5,6 +5,9 @@
 #include <cv_bridge/cv_bridge.h>
 #include <string>
 #include <iostream>
+//#include <opencv2/opencv.hpp>
+//#include "opencv2/cudaimgproc.hpp"
+//#include <opencv2/cudawarping.hpp>
 
 
 class ImageConverter
@@ -45,6 +48,8 @@ public:
     ROS_INFO("Callback of suscriber %d", 1);
     sensor_msgs::ImagePtr mymsg;
     cv::Mat Image1,Image2;
+    //cuda::GpuMat gpuInImage;
+    //cuda::GpuMat gpuOutImage;
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
@@ -56,6 +61,9 @@ public:
       return;
     }
 
+    // gpuInImage.upload(cv_ptr->image);
+    // cuda::resize(gpuInImage, gpuOutImage, Size(608,448));
+    // gpuOutImage.download(Image1);
     cv::resize(cv_ptr->image,Image1,cv::Size(width,height));
 
     mymsg = cv_bridge::CvImage(std_msgs::Header(), "bgr8",Image1).toImageMsg();

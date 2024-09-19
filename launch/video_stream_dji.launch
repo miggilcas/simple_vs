@@ -1,12 +1,12 @@
 <launch>
 
-    <arg name="uav_id" default="2"/>
+    <arg name="uav_id" default="uav_2"/>
     <arg name="fps" default="10"/>
     <arg name="height" default="448"/>
     <arg name="width" default="608"/>
     <arg name="source" default="/uav_2/dji_osdk_ros/main_camera_images"/> <!-- 0 para camara , 1 para video-->
 
-    <group ns="uav_$(arg uav_id)">
+    <group ns="$(arg uav_id)">
         
         <!-- Launch video_streamer node for uav id=3 -->
         <node pkg="simple_vs" type="video_streamer_dji" name="video_streamer_dji" output="screen" >
